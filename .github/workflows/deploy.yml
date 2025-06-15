@@ -16,5 +16,5 @@ jobs:
       - name: Deploy static files to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ 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 }}
           publish_dir: ./  # Укажите папку с файлами вашего сайта
