@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Меню калорийности Mare d`Amore</title>
+
+    <!-- Фавикон -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <!-- Мета-данные для отображения при пересылке ссылки -->
+    <meta property="og:title" content="Меню калорийности Mare d`Amore" />
+    <meta property="og:description" content="Калькулятор калорийности" />
+    <meta property="og:image" content="https://example.com/path/to/image.jpg" />
+    <meta property="og:url" content="https://yourwebsite.com/page" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Мета-теги для Яндекса -->
+    <meta name="keywords" content="ключевые слова, разделённые запятыми" />
+    <meta name="yandex-verification" content="код-подтверждения-от-Яндекса" />
+
+    <meta property="og:url" content="https://yourwebsite.com/ваша-страница" />
+    <meta property="og:image" content="" />
+
+    <link rel="stylesheet" href="/js/css/styles.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+ rel="stylesheet" />
+    <!-- Подключение Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+ 
+ 
+  </head>
+  <body>
+    <div id="app">
+      <h2>Меню</h2>
+      <div
+        v-for="category in menuCategories"
+        :key="category.name"
+        class="menu-category"
+      >
+        <h3>{{ category.name }}</h3>
+        <div
+          v-for="(item, index) in filteredItems(category.items)"
+          :key="item.nazvanie_blyuda"
+          class="menu-item"
+          :ref="'item' + category.name + index"
+          :class="{ visible: item.isVisible }"
+        >
+          <div class="item-info">
+            <div class="item-name">{{ item.nazvanie_blyuda }}</div>
+            <div class="item-details">
+              Вес: {{ item.vykhod_blyuda }} | Белки: {{ item.belki }} г | Жиры:
+              {{ item.zhiry }} г | Углеводы: {{ item.uglevody }} г | Ккал: {{
+              item.kcal }} | кДж: {{ item.kJ }}
+            </div>
+          </div>
+          <div class="buttons">
+            <button class="btn" @click="addToCart(item)">+</button>
+            <button
+              class="btn"
+              v-if="getCartItem(item) && getCartItem(item).count > 0"
+              @click="removeFromCart(item)"
+            >
+              -
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Окно корзины -->
+      <div class="cart" v-if="cart.length > 0">
+        <h3>Выбранные блюда</h3>
+        <div
+          v-for="(item, index) in cart"
+          :key="item.nazvanie_blyuda"
+          class="cart-item"
+        >
+          <div class="cart-item-info">
+            <strong>{{ item.nazvanie_blyuda }}</strong> x{{ item.count }}<br />
+            Белки: {{ item.belki }} г, Жиры: {{ item.zhiry }} г, Углеводы: {{
+            item.uglevody }} г, кДж: {{ item.kJ }}
+          </div>
+          <div class="cart-buttons">
+            <button class="btn" @click="addToCart(item)">+</button>
+            <button class="btn" @click="removeFromCart(item)">-</button>
+          </div>
+        </div>
+        <div class="summary">
+          <strong>ИТОГО:</strong> Белки: {{ totalBelki }} г, Жиры: {{ totalZhiry
+          }} г, Углеводы: {{ totalUglevody }} г, кДж: {{ totalKJ }}
+        </div>
+        <button class="btn" style="margin-top: 10px" @click="clearCart">
+          Очистить калькулятор <span class="material-symbols-outlined">
+close
+</span>
+        </button>
+      </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+  </body>
+</html>
